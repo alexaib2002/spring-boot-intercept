@@ -3,11 +3,13 @@ package org.alexaib.springlearn.springbootintercept.interceptors;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Calendar;
 
+@Component("scheduleInterceptor")
 public class ScheduleInterceptors implements HandlerInterceptor {
 
     @Value("${config.schedule.start}")
@@ -31,13 +33,6 @@ public class ScheduleInterceptors implements HandlerInterceptor {
             return true;
         }
         response.sendRedirect(request.getContextPath().concat("/closed"));
-        request.setAttribute("message",
-                new StringBuilder("Sorry, we're currently offline...\n")
-                        .append("Our opening hours are from")
-                        .append(scheduleStart)
-                        .append(" to ")
-                        .append(scheduleEnd)
-                        .toString());
         return false;
     }
 
